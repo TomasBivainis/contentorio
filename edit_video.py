@@ -4,6 +4,7 @@ import os
 import soundfile
 from pedalboard import Pedalboard, Chorus, Reverb, Distortion, Phaser, Bitcrush, Compressor, Gain
 from pedalboard.io import AudioFile
+import check_directory
 #scipy for painting vfx
 
 os.environ["IMAGEIO_FFMPEG_EXE"] = "/opt/homebrew/bin/ffmpeg"
@@ -11,10 +12,13 @@ VIDEO_PATH = "./videos/"
 OUTPUT_PATH = "./output/"
 TEMP_PATH = './temp/'
 
-
 # TODO - finish
 
 def edit_video(title):
+  check_directory(VIDEO_PATH)
+  check_directory(OUTPUT_PATH)
+  check_directory(TEMP_PATH)
+  
   video = VideoFileClip(VIDEO_PATH + title)
   
   #* video editing

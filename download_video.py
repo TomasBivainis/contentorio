@@ -1,10 +1,13 @@
 import argparse
+import check_directory
 from pytube import YouTube
 
 HIGHEST_QUALITY = '1080p'
 VIDEO_SAVE_DIRECTORY = "./videos"
 
 def download(video_url):
+  check_directory(VIDEO_SAVE_DIRECTORY)
+  
   video = YouTube(video_url)
 
   if len(video.streams.filter(res = HIGHEST_QUALITY, file_extension = 'mp4')) > 0:
