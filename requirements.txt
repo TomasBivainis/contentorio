@@ -1,0 +1,7 @@
+pytube
+moviepy
+selenium
+scipy
+librosa
+soundfile
+pedalboard
