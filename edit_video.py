@@ -4,13 +4,13 @@ import os
 import soundfile
 from pedalboard import Pedalboard, Chorus, Reverb, Distortion, Phaser, Bitcrush, Compressor, Gain
 from pedalboard.io import AudioFile
-import check_directory
+from check_directory import check_directory 
 #scipy for painting vfx
 
-os.environ["IMAGEIO_FFMPEG_EXE"] = "/opt/homebrew/bin/ffmpeg"
+os.environ["IMAGEIO_FFMPEG_EXE"] = "./ffmpeg"
 VIDEO_PATH = "./videos/"
 OUTPUT_PATH = "./output/"
-TEMP_PATH = './temp/'
+TEMP_PATH = "./temp/"
 
 # TODO - finish
 
@@ -34,7 +34,7 @@ def edit_video(title):
   
   audio = AudioFileClip(VIDEO_PATH + title)
   audio.write_audiofile(TEMP_PATH + 'temp.mp3')
-
+  
   #TODO - figure out what effects to use
   
   board = Pedalboard([Distortion(drive_db=25), Gain(gain_db=1), Chorus(rate_hz=1, depth=0.25, centre_delay_ms=7, feedback=0, mix=0.5), Phaser(rate_hz=1, depth=0.5, centre_frequency_hz=1300, feedback=0, mix=0.5)])
@@ -43,6 +43,8 @@ def edit_video(title):
   # Bitcrush()
   # Compressor()
 
+  print("audio fx done")
+  
   with AudioFile(TEMP_PATH + 'temp.mp3') as f:
     
     with AudioFile(TEMP_PATH + 'output.mp3', 'w', f.samplerate, f.num_channels) as o:
@@ -66,6 +68,16 @@ def edit_video(title):
   video.write_videofile(OUTPUT_PATH + title)
   
 if __name__ == '__main__':
-  edit_video('Very funny prank-Pilot pretends to falls asleep in airplane.mp4')
+  check_directory(VIDEO_PATH)
+  
+  videos = os.listdir(VIDEO_PATH)
+  
+  title = ""
+  
+  for video in videos:
+    title = video
+    break
+  
+  edit_video(title)
   
 

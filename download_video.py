@@ -1,5 +1,5 @@
 import argparse
-import check_directory
+from check_directory import check_directory
 from pytube import YouTube
 
 HIGHEST_QUALITY = '1080p'
@@ -9,6 +9,8 @@ def download(video_url):
   check_directory(VIDEO_SAVE_DIRECTORY)
   
   video = YouTube(video_url)
+
+  print(video.streams.filter(res = HIGHEST_QUALITY, file_extension = 'mp4'))
 
   if len(video.streams.filter(res = HIGHEST_QUALITY, file_extension = 'mp4')) > 0:
     video = video.streams.filter(res = HIGHEST_QUALITY, file_extension = 'mp4')[0]
@@ -22,4 +24,4 @@ def download(video_url):
       return False
     
 if __name__ == '__main__':
-  download('https://www.youtube.com/watch?v=1s8Kdc6AGT8')
+  download('https://www.youtube.com/watch?v=lSTgA8pEc8w')

@@ -2,10 +2,13 @@ import os
 
 def check_directory(path):
   files = os.listdir('./')
+  path = path.strip('./')
   
-  if files.index(path) == ValueError:
-    os.mkdir(path)
+  for file in files:
+    if file == path:
+      return
   
+  os.mkdir(path)  
   
 if __name__ == '__main__':
   check_directory('videos')
