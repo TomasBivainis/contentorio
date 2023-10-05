@@ -1,13 +1,14 @@
 import argparse
+<<<<<<< HEAD
 from check_directory import check_directory
+=======
+>>>>>>> parent of 0ddd6d2 (added use of check directory function)
 from pytube import YouTube
 
 HIGHEST_QUALITY = '1080p'
 VIDEO_SAVE_DIRECTORY = "./videos"
 
 def download(video_url):
-  check_directory(VIDEO_SAVE_DIRECTORY)
-  
   video = YouTube(video_url)
 
   print(video.streams.filter(res = HIGHEST_QUALITY, file_extension = 'mp4'))
