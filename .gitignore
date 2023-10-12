@@ -2,3 +2,4 @@ output
 temp
 videos
 __pycache__
+ffmpeg
