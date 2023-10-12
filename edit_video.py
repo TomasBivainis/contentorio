@@ -1,13 +1,12 @@
+import os
+os.environ["IMAGEIO_FFMPEG_EXE"] = "./ffmpeg"
 from moviepy.editor import *
 from librosa import load
-import os
 import soundfile
 from pedalboard import Pedalboard, Chorus, Reverb, Distortion, Phaser, Bitcrush, Compressor, Gain
 from pedalboard.io import AudioFile
-<<<<<<< HEAD
 from check_directory import check_directory 
-=======
->>>>>>> parent of 0ddd6d2 (added use of check directory function)
+import ffmpeg
 #scipy for painting vfx
 
 os.environ["IMAGEIO_FFMPEG_EXE"] = "./ffmpeg"
@@ -15,8 +14,15 @@ VIDEO_PATH = "./videos/"
 OUTPUT_PATH = "./output/"
 TEMP_PATH = "./temp/"
 
-
 # TODO - finish
+
+def merge_video(title):
+  video = VideoFileClip('./temp/video.mp4')
+  audio = AudioFileClip('./temp/audio.mp4')
+  
+  video.set_audio(audio)
+  
+  video.write_videofile('./videos/' + title + '.mp4')
 
 def edit_video(title):
   video = VideoFileClip(VIDEO_PATH + title)
@@ -32,8 +38,8 @@ def edit_video(title):
   
   #* audio editing
   
-  audio = AudioFileClip(VIDEO_PATH + title)
-  audio.write_audiofile(TEMP_PATH + 'temp.mp3')
+  audio = AudioFileClip(VIDEO_PATH + title, buffersize = 9999999999999999) 
+  audio.write_audiofile(TEMP_PATH + 'temp.mp3', write_logfile = True)
   
   #TODO - figure out what effects to use
   
@@ -66,18 +72,20 @@ def edit_video(title):
     os.remove(TEMP_PATH + file)
   
   video.write_videofile(OUTPUT_PATH + title)
-  
+
 if __name__ == '__main__':
   check_directory(VIDEO_PATH)
   
-  videos = os.listdir(VIDEO_PATH)
+  unedited_videos = os.listdir(VIDEO_PATH)
+  edited_videos = os.listdir(OUTPUT_PATH)
   
-  title = ""
+  print(unedited_videos)
+  print(edited_videos)
   
-  for video in videos:
-    title = video
-    break
-  
-  edit_video(title)
+  for video in unedited_videos:
+    if video in edited_videos:
+      pass
+    else:
+      edit_video(video)
   
 

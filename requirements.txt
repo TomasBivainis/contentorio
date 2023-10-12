@@ -5,3 +5,4 @@ scipy
 librosa
 soundfile
 pedalboard
+ffmpeg-python
