@@ -1,20 +1,14 @@
 import os
 os.environ["IMAGEIO_FFMPEG_EXE"] = "./ffmpeg"
 from moviepy.editor import *
-from librosa import load
-import soundfile
 from pedalboard import Pedalboard, Chorus, Reverb, Distortion, Phaser, Bitcrush, Compressor, Gain
 from pedalboard.io import AudioFile
 from check_directory import check_directory 
-import ffmpeg
-#scipy for painting vfx
 
 os.environ["IMAGEIO_FFMPEG_EXE"] = "./ffmpeg"
 VIDEO_PATH = "./videos/"
 OUTPUT_PATH = "./output/"
 TEMP_PATH = "./temp/"
-
-# TODO - finish
 
 def merge_video(title):
   video = VideoFileClip('./temp/video.mp4')
@@ -28,7 +22,6 @@ def edit_video(title):
   video = VideoFileClip(VIDEO_PATH + title)
   
   #* video editing
-  #? maybe tweak some settings or experiment
   
   video = video.fx(vfx.colorx, 100)
   video = video.fx(vfx.gamma_corr, -10)
@@ -41,15 +34,11 @@ def edit_video(title):
   audio = AudioFileClip(VIDEO_PATH + title, buffersize = 9999999999999999) 
   audio.write_audiofile(TEMP_PATH + 'temp.mp3', write_logfile = True)
   
-  #TODO - figure out what effects to use
-  
   board = Pedalboard([Distortion(drive_db=25), Gain(gain_db=1), Chorus(rate_hz=1, depth=0.25, centre_delay_ms=7, feedback=0, mix=0.5), Phaser(rate_hz=1, depth=0.5, centre_frequency_hz=1300, feedback=0, mix=0.5)])
   # Distortion()
   # Chorus()
   # Bitcrush()
   # Compressor()
-
-  print("audio fx done")
   
   with AudioFile(TEMP_PATH + 'temp.mp3') as f:
     
